@@ -1,0 +1,44 @@
+//Variable Overrides
+$primary: #F0BC68;
+$secondary: #8F8F8F;
+$success: #33CA7F;
+$danger: #EF6461;
+$warning: #FF8247;
+$info: #62B6CB;
+$light: #FAF9F6;
+$dark: #353535;
+$pink: #F5D1C3;
+$beige: #F7E6CA;
+$green: #365A51;
+$darkgreen : #345553;
+
+$theme-colors: (
+    "primary": $primary,
+    "secondary": $secondary,
+    "success": $success,
+    "danger": $danger,
+    "warning": $warning,
+    "info": $info,
+    "light": $light,
+    "dark": $dark,
+    "pink": $pink,
+    "beige": $beige,
+    "green": $green,
+    "darkgreen": $darkgreen
+);
+
+// Include Bootstrap
+@import "../node_modules/bootstrap/scss/bootstrap";
+@import url('https://fonts.googleapis.com/css2?family=Lato&family=Montserrat&display=swap');
+
+body {
+    background-color: $light;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', serif;
+}
+
+p {
+    font-family: 'Lato', sans-serif;
+}
