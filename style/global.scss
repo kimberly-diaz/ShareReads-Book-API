@@ -28,7 +28,7 @@ $theme-colors: (
 );
 
 // Include Bootstrap
-@import "../node_modules/bootstrap/scss/bootstrap";
+@import "node_modules/bootstrap/scss/bootstrap";
 @import url('https://fonts.googleapis.com/css2?family=Lato&family=Montserrat&display=swap');
 
 body {
