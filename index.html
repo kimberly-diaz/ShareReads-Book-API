@@ -5,41 +5,49 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ShareReads</title>
-    <link rel="stylesheet" href="style/global.css">
+
+    <!-- Link to stylesheet -->
+    <link rel="stylesheet" href="assets/style/global.css">
 </head>
-<body>
-    <div class="container">
+<body class="w-100" style="background: url('assets/images/website/index-bg.png') no-repeat; background-size: cover;">
+    <!-- Index Container -->
+    <div class="container index">
+        <!-- Navigation bar with Logo and Google Sign In -->
         <div class="nav-bar">
-            <div class="logo"><img src="" alt=""></div>
-            <div class="google"></div>
+            <div class="logo rounded-circle"><img src="assets/images/website/logo.png" alt="ShareReads' Logo"></div>
+            <div class="google"><img src="assets/images/website/google.png" alt="ShareReads' Logo"></div>
         </div>
     
-        <h1>Share Reads</h1>
-        <h3>Your gateway to knowledge and strength</h3>
+        <!-- Website Name & Tagline -->
+        <h1 class="fw-bold text-primary">ShareReads</h1>
+        <h4 class="fw-bold">Your gateway to knowledge and strength</h4>
     
-        <p>Features to expect:</p>
+        <!-- List of Features -->
+        <p class="fs-5 mb-3">Features to expect:</p>
         <div class="features">
             <div class="feature">
-                <img src="" alt="">
-                <p>Explore books based on genre, author and more</p>
+                <div class="img bg-lightpurple"><img src="assets/images/website/search.png" alt="Search Icon"></div>
+                <p class="fs-5">Explore books based on genre, author and more</p>
             </div>
             <div class="feature">
-                <img src="" alt="">
-                <p>Find new, classic or popular authors</p>
+                <div class="img bg-lightpurple"><img src="assets/images/website/add.png" alt="Add Icon"></div>
+                <p class="fs-5">Find new, classic or popular authors</p>
             </div>
             <div class="feature">
-                <img src="" alt="">
-                <p>Read book previews with friends</p>
+                <div class="img bg-lightpurple"><img src="assets/images/website/people.png" alt="People Icon"></div>
+                <p class="fs-5">Read book previews with friends</p>
             </div>
             <div class="feature">
-                <img src="" alt="">
-                <p>Save your favourite books and read them later</p>
+                <div class="img bg-lightpurple"><img src="assets/images/website/save.png" alt="Save Icon"></div>
+                <p class="fs-5">Save your favourite books and read them later</p>
             </div>
         </div>
     
+        <!-- Search bar to search for book title -->
         <div class="search">
-            <p>Enter book name here...</p>
-            <button class="home_search">Enter book</button>
+            <!-- Change from p to input later -->
+            <input class="bg-lightpurple m-0 border-0 text-dark" placeholder="Enter book title here..."></input>
+            <button class="home_search bg-secondary border-0 text-white">Search book</button>
         </div>
     </div>
 </body>
