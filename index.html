@@ -6,16 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ShareReads</title>
 
+    <!-- Google Sign In Credentials & Script -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <div id="g_id_onload"
+         data-client_id="735045693747-75v8br5a2bcrk64mogsu9t9aop64ggr6.apps.googleusercontent.com"
+         data-callback="handleCredentialResponse">
+    </div>
+
     <!-- Link to stylesheet -->
     <link rel="stylesheet" href="assets/style/global.css">
 </head>
-<body class="w-100" style="background: url('assets/images/website/index-bg.png') no-repeat; background-size: cover;">
+<body class="w-100" style="background: url('assets/images/website/index-bg.png') no-repeat center; background-size: cover;">
     <!-- Index Container -->
     <div class="container index">
         <!-- Navigation bar with Logo and Google Sign In -->
         <div class="nav-bar">
             <div class="logo rounded-circle"><img src="assets/images/website/logo.png" alt="ShareReads' Logo"></div>
-            <div class="google"><img src="assets/images/website/google.png" alt="ShareReads' Logo"></div>
+
+            <!-- Using the google class automatically adds JS -->
+            <div class="g-signin2" data-width="250" data-height="60" data-longtitle="true" data-onsuccess="onSignIn"></div>
         </div>
     
         <!-- Website Name & Tagline -->
@@ -49,6 +58,25 @@
             <input class="bg-lightpurple m-0 border-0 text-dark" placeholder="Enter book title here..."></input>
             <button class="home_search bg-secondary border-0 text-white">Search book</button>
         </div>
+
+        <section id="search" class="results">
+              <input
+                id="search-box"
+                class="search-box"
+                placeholder="Search books by name, author, genre and etc ..."
+                aria-label="Search books"
+              />
+            <div class="list-book search">
+              <div class="prompt">Enter a search term</div>
+            </div>
+          </section>
     </div>
+
+    <script>
+        // function onSignIn(googleUser) {
+        //     console.log('User is ' + JSON.stringify(googleUser.getBasicProfile()));
+        // }
+    </script>
+    <script src="index.js"></script>
 </body>
 </html>
