@@ -17,22 +17,6 @@
                 background-color: $darkerlightpurple;
             }
         }
-
-        .google {
-            width: 5.625rem;
-            height: 4.25rem;
-            border-radius: 0.625rem;
-            background-color: $light;
-
-            img {
-                padding: 0.875rem 1.5625rem;
-            }
-
-            &:hover {
-                background-color: $lightpurple;
-                cursor: pointer;
-            }
-        }        
     }
 
     h1 {

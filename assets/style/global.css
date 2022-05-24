@@ -12254,22 +12254,6 @@ img {
   background-color: #EBF1FF;
 }
 
-.index .nav-bar .google {
-  width: 5.625rem;
-  height: 4.25rem;
-  border-radius: 0.625rem;
-  background-color: #FFFFFF;
-}
-
-.index .nav-bar .google img {
-  padding: 0.875rem 1.5625rem;
-}
-
-.index .nav-bar .google:hover {
-  background-color: #F0F5FF;
-  cursor: pointer;
-}
-
 .index h1, .index .h1 {
   margin-top: 3rem;
   margin-bottom: 0.5rem;
