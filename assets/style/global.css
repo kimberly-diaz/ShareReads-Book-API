@@ -12249,6 +12249,10 @@ button:hover {
   max-width: 1024px;
 }
 
+.btn-primary {
+  border-color: transparent;
+}
+
 .index .nav-bar {
   display: -ms-grid;
   display: grid;

@@ -68,6 +68,10 @@ button {
     max-width: 1024px;
 }
 
+.btn-primary {
+    border-color: transparent;
+}
+
 // Import Partial Files
 @import "pages-elements/index";
 @import "pages-elements/book";
