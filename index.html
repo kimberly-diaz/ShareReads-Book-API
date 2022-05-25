@@ -55,13 +55,18 @@
             </div>
         </div>
 
-        <!-- Search bar to search for book title -->
-        <div id="search" class="search-container">
-            <input id="search-box" class="search-box bg-lightpurple m-0 border-0 text-dark"
-                placeholder="Enter book title here..."></input>
+        <div class="outer-search-container">
+            <!-- Search bar to search for book title -->
+            <div id="search" class="inner-search-container">
+                <input id="search-box" class="search-box bg-lightpurple m-0 border-0 text-dark"
+                    placeholder="Enter book title here..."></input>
 
-            <!-- Search result button trigger -->
-            <button type="button" class="btn btn-primary home_search bg-secondary border-0 text-white" data-toggle="modal" data-target="#exampleModal">Search book</button>
+                <!-- Search result button trigger -->
+                <button type="button" class="search-btn btn btn-primary home_search bg-secondary text-white"
+                    data-toggle="modal" data-target="#exampleModal">Search book</button>
+            </div>
+            <!-- Explore page button -->
+            <button class="home-btn pd-5 border-0 bg-secondary text-light"><div class="img"><img src="assets/images/website/explore.png" alt="Explore Icon"></div></button>
         </div>
 
         <!-- Modal for displaying the search result -->
