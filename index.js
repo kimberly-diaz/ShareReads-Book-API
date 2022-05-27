@@ -1,6 +1,6 @@
 // Gets the search input field & button
-let bookContainer = document.querySelector(".search");
-let searchBooks = document.getElementById("search-box");
+let bookContainer = document.querySelector(".search"); // Output
+let searchBooks = document.getElementById("search-box"); // Input
 
 // Gets books by fetching the result from the JSON file
 const getBooks = async (book) => {
@@ -20,12 +20,13 @@ const extractThumbnail = ({ imageLinks }) => {
   return imageLinks.thumbnail.replace("http://", "https://");
 };
 
-// Outputs the list of books
+// Outputs the list of books for the search bar
 const drawListBook = async () => {
   if (searchBooks.value != "") {
     bookContainer.innerHTML = `<div class='prompt'><div class="loader"></div></div>`;
     const data = await getBooks(`${searchBooks.value}`);
     if (data.error) {
+      console.log(data.error);
       bookContainer.innerHTML = `<div class='prompt'>ツ Limit exceeded! Try after some time</div>`;
     } else if (data.totalItems == 0) {
       bookContainer.innerHTML = `<div class='prompt'>ツ No results, try a different term!</div>`;
@@ -39,19 +40,18 @@ const drawListBook = async () => {
               <div class="book-img">
                 <a href='${volumeInfo.previewLink}' target='_blank'><img class='thumbnail' src='` + extractThumbnail(volumeInfo) + `' alt='cover'></a>
               </div>
-
               <div class='book-info'>
                 <h3 class='book-title fw-bold m-0'><a class="text-dark" href='${volumeInfo.previewLink}' target='_blank'>${volumeInfo.title}</a></h3>
 
                 <div class='book-authors'>by ${volumeInfo.authors[0]}` +
-                  (volumeInfo.authors[1] === undefined
-                    ? " "
-                    : ', ' + volumeInfo.authors[1]) +
-                  `` +
-                  (volumeInfo.authors[2] === undefined
-                    ? " "
-                    : ', ' + volumeInfo.authors[2]) +
-                  `</div>
+                (volumeInfo.authors[1] === undefined
+                  ? " "
+                  : ", " + volumeInfo.authors[1]) +
+                `` +
+                (volumeInfo.authors[2] === undefined
+                  ? " "
+                  : ", " + volumeInfo.authors[2]) +
+                `</div>
 
                 <p class='book-desc'>` +
                 (volumeInfo.description === undefined
@@ -64,9 +64,10 @@ const drawListBook = async () => {
                   ? "Unknown"
                   : volumeInfo.categories) +
                 `</p>
-                </div>
+                <a target='_blank' href='liveblocks-api/static/index.html?isbn=` + volumeInfo.industryIdentifiers[0].identifier + `' class='btn text-primary bg-outline-primary search-box-2'>not sure</a>
+              </div>
             </div>`
-        )
+          )
         .join("");
     }
   } else {
@@ -78,4 +79,5 @@ const drawListBook = async () => {
 const debounce = (fn, time, to = 0) => {
   to ? clearTimeout(to) : (to = setTimeout(drawListBook, time));
 };
+
 searchBooks.addEventListener("input", () => debounce(drawListBook, 1000));
