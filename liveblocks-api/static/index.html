@@ -40,12 +40,12 @@
     <!-- Navigation bar -->
     <div class="nav-bar bg-primary">
       <div>
-        <div class="img img-user mb-5"><a href="/login.html"><img src="../../assets/images/website/user.png" alt="User Icon"></a></div>
-        <div class="img"><a href="/index.html"><img src="../../assets/images/website/home.png" alt="Home Icon"></a></div>
-        <div class="img"><a href="/explore.html"><img src="../../assets/images/website/explore.png" alt="Explore Icon"></a></div>
-        <div class="img"><a href="/favourite.html"><img src="../../assets/images/website/favourite.png" alt="Favourite Icon"></a></div>
+        <div class="img img-user mb-5"><a href="../..//login.html"><img src="../../assets/images/website/user.png" alt="User Icon"></a></div>
+        <div class="img"><a href="../../index.html"><img src="../../assets/images/website/home.png" alt="Home Icon"></a></div>
+        <div class="img"><a href="../..//explore.html"><img src="../../assets/images/website/explore.png" alt="Explore Icon"></a></div>
+        <div class="img"><a href="../..//favourite.html"><img src="../../assets/images/website/favourite.png" alt="Favourite Icon"></a></div>
       </div>
-      <div class="img img-leave"><a href="/logout.html"><img src="../../assets/images/website/leave.png" alt="Leave Icon"></a></div>
+      <div class="img img-leave"><a href="../..//logout.html"><img src="../../assets/images/website/leave.png" alt="Leave Icon"></a></div>
     </div>
 
     <!-- Book Information Section -->
@@ -96,7 +96,24 @@
             alert("No result... Try again...")
           }
           else {
-            displayResult(response);
+            var id = response.items[0].id;
+
+            $.ajax({
+              url: "https://www.googleapis.com/books/v1/volumes/" + id,
+              dataType: "json",
+              
+              success: function (response) {
+                if (response.totalItems === 0) {
+                  alert("No result... Try again...")
+                }
+                else {
+                  displayResult(response);
+                }
+              },
+              error: function () {
+                alert("Something went wrong.. <br>" + "Try again!");
+              }
+            });
           }
         },
         error: function () {
@@ -105,25 +122,28 @@
       });
 
       function displayResult(response) {
-        bookImg = ( response.items[0].volumeInfo.imageLinks ) ?  response.items[0].volumeInfo.imageLinks.thumbnail : placeHldr;
-        title = response.items[0].volumeInfo.title;
-        author = response.items[0].volumeInfo.authors[0];
-        author2 = ( response.items[0].volumeInfo.authors[1] ) ?  response.items[0].volumeInfo.authors[1] : "";
-        author3 = ( response.items[0].volumeInfo.authors[2] ) ?  response.items[0].volumeInfo.authors[2] : "";
-        averageRating = response.items[0].volumeInfo.averageRating;
-        ratingsCount = response.items[0].volumeInfo.ratingsCount;
-        pageCount = response.items[0].volumeInfo.pageCount;
-        description = response.items[0].volumeInfo.description;
-        publishedDate = response.items[0].volumeInfo.publishedDate;
-        publisher = response.items[0].volumeInfo.publisher;
-        bookLink = response.items[0].volumeInfo.previewLink;
-        bookIsbn = response.items[0].volumeInfo.industryIdentifiers[1].identifier
-        categories = ( response.items[0].volumeInfo.categories[0] ) ?  response.items[0].volumeInfo.categories[0] : "";
-        categories2 = ( response.items[0].volumeInfo.categories[1] ) ?  response.items[0].volumeInfo.categories[1] : "";
-        categories3 = ( response.items[0].volumeInfo.categories[2] ) ?  response.items[0].volumeInfo.categories[2] : "";
+        bookImg = ( response.volumeInfo.imageLinks ) ?  response.volumeInfo.imageLinks.large : placeHldr;
+        title = response.volumeInfo.title;
+        author = response.volumeInfo.authors[0];
+        author2 = ( response.volumeInfo.authors[1] ) ?  response.volumeInfo.authors[1] : "";
+        author3 = ( response.volumeInfo.authors[2] ) ?  response.volumeInfo.authors[2] : "";
+        averageRating = response.volumeInfo.averageRating;
+        ratingsCount = response.volumeInfo.ratingsCount;
+        pageCount = response.volumeInfo.pageCount;
+        publishedDate = response.volumeInfo.publishedDate;
+        publisher = response.volumeInfo.publisher;
+        bookLink = response.volumeInfo.previewLink;
+        bookIsbn = response.volumeInfo.industryIdentifiers[1].identifier
+        categories = ( response.volumeInfo.categories[0] ) ?  response.volumeInfo.categories[0] : "";
+        categories2 = ( response.volumeInfo.categories[1] ) ?  response.volumeInfo.categories[1] : "";
+        categories3 = ( response.volumeInfo.categories[2] ) ?  response.volumeInfo.categories[2] : "";
+        description = response.volumeInfo.description;
+
+        // Removes HTML tags
+        let strippedString = description.replace(/(<([^>]+)>)/gi, "");
 
         // in production code, item.text should have the HTML entities escaped.
-        bookContainer.innerHTML += formatOutput(bookImg, title, author, averageRating, ratingsCount, pageCount, description, author2, author3, publishedDate, publisher);
+        bookContainer.innerHTML += formatOutput(bookImg, title, author, averageRating, ratingsCount, pageCount, strippedString, author2, author3, publishedDate, publisher);
       }
 
       function formatOutput(bookImg, title, author, averageRating, ratingsCount, pageCount, description, author2, author3, publishedDate, publisher) {
@@ -143,7 +163,7 @@
                               <div class="info-pages text-secondary">${pageCount} Pages</div>
                             </div>
                             <p class="fw-bold fs-5 mt-2 mb-0">Sypnosis</p>
-                            <p>${description}</p>
+                            <div class="info-desc">${description}</div>
                           </div>
                         </div>
 
