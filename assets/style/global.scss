@@ -161,12 +161,12 @@ button {
                         margin-bottom: 0;
                     }
                 }
-                p:last-child {
+                .info-desc {
                     overflow-y: auto;
                     height: 8.5rem;
-
+    
                     &::-webkit-scrollbar { 
-                        display: none;  /* Safari and Chrome */
+                            display: none;  /* Safari and Chrome */
                     }
                 }
             }

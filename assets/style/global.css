@@ -12765,12 +12765,12 @@ button:hover {
   margin-bottom: 0;
 }
 
-.viewer-page .book-fullinfo .info-main div p:last-child {
+.viewer-page .book-fullinfo .info-main div .info-desc {
   overflow-y: auto;
   height: 8.5rem;
 }
 
-.viewer-page .book-fullinfo .info-main div p:last-child::-webkit-scrollbar {
+.viewer-page .book-fullinfo .info-main div .info-desc::-webkit-scrollbar {
   display: none;
   /* Safari and Chrome */
 }
