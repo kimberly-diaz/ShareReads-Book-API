@@ -1,55 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Liveblocks</title>
-    <meta name="robots" content="noindex" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-      href="https://liveblocks.io/favicon-32x32.png"
-      rel="icon"
-      sizes="32x32"
-      type="image/png"
-    />
-    <link
-      href="https://liveblocks.io/favicon-16x16.png"
-      rel="icon"
-      sizes="16x16"
-      type="image/png"
-    />
-    <link rel="stylesheet" type="text/css" href="styles.css" />
 
-    <script type="text/javascript" src="https://www.google.com/books/jsapi.js"></script>
-    <script type="text/javascript">
-      google.books.load();
+<head>
+  <meta charset="utf-8" />
+  <title>Liveblocks</title>
+  <meta name="robots" content="noindex" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-      function initialize() {
-        var viewer = new google.books.DefaultViewer(document.getElementById('viewerCanvas'));
-        viewer.load('ISBN:0738531367');
+  <!-- Link to the stylesheet -->
+  <link rel="stylesheet" href="../../assets/style/global.css">
+
+  <!-- Link to the Javascript Online Site -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> 
+
+  <!-- Javascript for running the Google Books Viewfinder -->
+  <script type="text/javascript" src="https://www.google.com/books/jsapi.js"></script>
+  <script type="text/javascript">
+    google.books.load();
+
+    function initialize() {
+      var viewer = new google.books.DefaultViewer(document.getElementById('viewerCanvas'));
+      var index = document.URL.indexOf('?isbn=');
+      if (index > 0) {
+        var bookIsbn = document.URL.substring(index, document.URL.length).split("=")[1]
+      }
+      viewer.load('ISBN:' + bookIsbn);
+    }
+    google.books.setOnLoadCallback(initialize);
+  </script>
+</head>
+
+<body>
+  <div class="viewer-page">
+    <!-- Cursor SVG design -->
+    <svg class="cursor" id="cursor-template" width="24" height="36" viewBox="0 0 24 36" fill="transparent" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z" />
+    </svg>
+
+    <!-- Navigation bar -->
+    <div class="nav-bar bg-primary">
+      <div>
+        <div class="img img-user mb-5"><a href="/login.html"><img src="../../assets/images/website/user.png" alt="User Icon"></a></div>
+        <div class="img"><a href="/index.html"><img src="../../assets/images/website/home.png" alt="Home Icon"></a></div>
+        <div class="img"><a href="/explore.html"><img src="../../assets/images/website/explore.png" alt="Explore Icon"></a></div>
+        <div class="img"><a href="/favourite.html"><img src="../../assets/images/website/favourite.png" alt="Favourite Icon"></a></div>
+      </div>
+      <div class="img img-leave"><a href="/logout.html"><img src="../../assets/images/website/leave.png" alt="Leave Icon"></a></div>
+    </div>
+
+    <!-- Book Information Section -->
+    <div class="book-fullinfo px-4 py-5">
+      <div class="info-header">
+        <h1 class="fw-bold text-dark fs-3">READING</h1>
+        <button class="btn btn-outline-secondary">Change ISBN Link</button>
+      </div>
+
+      <!-- Outputs the Book Container from a Javascript File -->
+      <div id="book-container"></div>
+
+      <!-- Missing -->
+      <div class="chat-room">missing</div>
+    </div>
+
+    <!-- Contains the Cursor Container & the Google ViewFinder -->
+    <div class="grid">
+      <div id="cursors-container"></div>
+      <div id="viewerCanvas" style="width: 100%; height: 100vh"></div>
+    </div>
+
+  </div>
+
+  <!-- Script for the Liveblocks live cursors -->
+  <script src="app.js"></script>
+
+  <!-- Script for Outputting the Book's Information -->
+  <script>
+    $(document).ready(function() {
+      var bookThumbnail = document.getElementById('info-thumbnail');
+      var bookContainer = document.getElementById("book-container");
+      var placeHldr = '<img src="https://via.placeholder.com/150">';
+
+      bookContainer.innerHTML = "";
+
+      var index = document.URL.indexOf('?isbn=');
+      if (index > 0) {
+        var bookISBN = document.URL.substring(index, document.URL.length).split("=")[1];
       }
 
-      google.books.setOnLoadCallback(initialize);
-    </script>
-  </head>
-  <body>
-    <svg
-      class="cursor"
-      id="cursor-template"
-      width="24"
-      height="36"
-      viewBox="0 0 24 36"
-      fill="transparent"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z"
-      />
-    </svg>
-    <div id="text">
-      Move your cursor to broadcast its position to other people in the room.
-    </div>
-    <!-- <div id="viewerCanvas" style="width: 600px; height: 500px"></div> -->
-    <div id="cursors-container"></div>
-    <script src="app.js"></script>
-  </body>
+      $.ajax({
+        url: "https://www.googleapis.com/books/v1/volumes?q=isbn=" + bookISBN,
+        dataType: "json",
+        
+        success: function (response) {
+          if (response.totalItems === 0) {
+            alert("No result... Try again...")
+          }
+          else {
+            displayResult(response);
+          }
+        },
+        error: function () {
+          alert("Something went wrong.. <br>" + "Try again!");
+        }
+      });
+
+      function displayResult(response) {
+        bookImg = ( response.items[0].volumeInfo.imageLinks ) ?  response.items[0].volumeInfo.imageLinks.thumbnail : placeHldr;
+        title = response.items[0].volumeInfo.title;
+        author = response.items[0].volumeInfo.authors[0];
+        author2 = ( response.items[0].volumeInfo.authors[1] ) ?  response.items[0].volumeInfo.authors[1] : "";
+        author3 = ( response.items[0].volumeInfo.authors[2] ) ?  response.items[0].volumeInfo.authors[2] : "";
+        averageRating = response.items[0].volumeInfo.averageRating;
+        ratingsCount = response.items[0].volumeInfo.ratingsCount;
+        pageCount = response.items[0].volumeInfo.pageCount;
+        description = response.items[0].volumeInfo.description;
+        publishedDate = response.items[0].volumeInfo.publishedDate;
+        publisher = response.items[0].volumeInfo.publisher;
+        bookLink = response.items[0].volumeInfo.previewLink;
+        bookIsbn = response.items[0].volumeInfo.industryIdentifiers[1].identifier
+        categories = ( response.items[0].volumeInfo.categories[0] ) ?  response.items[0].volumeInfo.categories[0] : "";
+        categories2 = ( response.items[0].volumeInfo.categories[1] ) ?  response.items[0].volumeInfo.categories[1] : "";
+        categories3 = ( response.items[0].volumeInfo.categories[2] ) ?  response.items[0].volumeInfo.categories[2] : "";
+
+        // in production code, item.text should have the HTML entities escaped.
+        bookContainer.innerHTML += formatOutput(bookImg, title, author, averageRating, ratingsCount, pageCount, description, author2, author3, publishedDate, publisher);
+      }
+
+      function formatOutput(bookImg, title, author, averageRating, ratingsCount, pageCount, description, author2, author3, publishedDate, publisher) {
+        var viewUrl = "book.html?isbn="; //constructing link for bookviewer
+        var htmlCard = `<div class="info-main my-4">
+                          <div id="info-thumbnail" class="img"><img src="${bookImg}"></div>
+                          <div>
+                            <p class="info-title fw-bold">${title}</p>
+                            <p class="info-author text-grey">by ${author}</p>
+                            <div class="info-stats bg-lightpurple">
+                              <div class="info-stars text-secondary">
+                                <div class="info-stars">${averageRating}/5 Stars</div>
+                              </div>
+                              <p class="text-secondary fw-bold">|</p>
+                              <div class="info-ratings text-secondary">${ratingsCount} Ratings</div>
+                              <p class="text-secondary fw-bold">|</p>
+                              <div class="info-pages text-secondary">${pageCount} Pages</div>
+                            </div>
+                            <p class="fw-bold fs-5 mt-2 mb-0">Sypnosis</p>
+                            <p>${description}</p>
+                          </div>
+                        </div>
+
+                        <div class="info-more">
+                          <div class="info-more_card">
+                            <p>All Authors</p>
+                            <p>${author}</p>
+                            <p>${author2}</p>
+                            <p>${author3}</p>
+                          </div>
+                          <div class="info-more_card">
+                            <p>Published Date</p>
+                            <p>${publishedDate}</p>
+                          </div>
+                          <div class="info-more_card">
+                            <p>Publisher</h6>
+                            <p>${publisher}</p>
+                          </div>
+                          <div class="info-more_card">
+                            <p>Categories</h6>
+                            <p>Juvenile Fiction</p>
+                            <p>Kids Imagination</p>
+                            <p>Fiction</p>
+                          </div>
+                        </div>`;
+        return htmlCard;
+      }
+    });
+  </script>
+</body>
+
 </html>

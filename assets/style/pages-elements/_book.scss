@@ -15,6 +15,7 @@
     
             img {
                 border-radius: 1.5625rem;
+                object-fit: cover;
             }
         }
         .book-info {
@@ -22,7 +23,7 @@
                 font-size: 1rem;
             }
             .book-authors {
-                color: #86898D;
+                color: $lightergrey;
                 margin-bottom: .5rem;
             }
             
