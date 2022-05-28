@@ -81,131 +81,124 @@ button {
 @import "pages-elements/book";
 @import "pages-elements/viewer";
 
-.viewer-page {
+.explore-page {
     display: grid;
-    grid-template-columns: 1fr 6.2fr 6fr;
-    justify-content: space-between;
+    grid-template-columns: 25rem 1fr;
+    grid-gap: 3rem;
 
     .nav-bar {
+        border-radius: 0 1.2rem 1.2rem 0;
+        font-family: 'Montserrat', serif;
+        height: 100vh;
         display: grid;
-        justify-items: space-between;
+        grid-template-rows: 1fr 5fr 1fr;
+        position: sticky;
+        top: 0;
 
-        .img {
-            z-index: 100;
-            width: 2rem;
-            height: 2rem;
-            margin: 2.5rem auto 0;
-
-            &:hover {
-                cursor: pointer;
-            }
-        }
-
-        .img-user {
-            margin-top: 2rem;
-            width: 3rem;
-            height: 3rem;
-            align-self: flex-end;
-        }
-
-        .img-leave {
-            margin-top: 8rem;
-        }
-
-        #viewerCanvas {
-            width: 100vh;
-            height: 100vh;
-        }
-    }
-
-    .book-fullinfo {
-        .info-header {
-            display: flex;
-            justify-content: space-between;
-        }
-        
-        .info-main {
+        .user {
             display: grid;
-            grid-template-columns: 12rem 1fr;
-            grid-gap: 1rem;
+            grid-template-columns: 3.4375rem 1fr;
+            grid-gap: 1.5rem;
 
             .img {
-                width: 12rem;
-                height: 17rem;
-                
-                img {
-                    border-radius: 1rem;    
-                    object-fit: cover;
-                }
+                width: 3.4375rem;
+                height: 3.4375rem;
             }
-
-            div {
-                .info-title {
-                    font-size: 15px;
-                    margin-bottom: 0.3125rem;
-                }
-
-                .info-author {
-                    margin-bottom: 0.875rem;
-                }
-
-                .info-stats {
-                    display: grid;
-                    grid-template-columns: 1fr 1px 1fr 1px 1fr;
-                    grid-gap: 1px;
-                    padding: 0.625rem 1.625rem;
-                    font-size: 15px;
-                    border-radius: 5px;
-                    justify-items: center;
-                    p {
-                        margin-bottom: 0;
-                    }
-                }
-                .info-desc {
-                    overflow-y: auto;
-                    height: 8.5rem;
-    
-                    &::-webkit-scrollbar { 
-                            display: none;  /* Safari and Chrome */
-                    }
-                }
-            }
-        }
-
-        .info-more {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
 
             p {
-                margin-bottom: 0;
+                font-size: 1rem;
+                margin-top: -.25rem;
             }
+        }
 
-            p:first-child {
-                font-weight: 700;
-                font-size: 14px;
-            }
+        .main-links {
+            display: grid;
+            grid-template-rows: auto;
 
-            p:not(:first-child) {
-                color: $lightergrey;
-                font-size: 12px;
+            .link {
+                display: flex;
+                justify-content: space-between;
+
+                .img {
+                    width: 0.5625rem;
+                    height: 1.0625rem;
+                }
             }
         }
     }
 
-    .cursor {
-        z-index: 100;
-        position: absolute;
-        top: 0;
-        left: 0;
-        transition: transform 0.5s cubic-bezier(0.17, 0.93, 0.38, 1);
-    }
+    .main-container {
+        .explore-header, .explore-top10 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    #cursors-container {
-        z-index: -100;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
+        .explore-top10 div {
+            display: grid;
+            grid-auto-flow: column;
+            grid-gap: 0.75rem;
+
+            .img {
+                width: 2.125rem;
+                height: 2.125rem;
+            }
+        }
+
+        .nyt-api {
+            display: grid;
+            grid-auto-flow: column;
+            grid-gap: 1.875rem;
+            height: 17.75rem;
+            
+            .img-container {
+                margin-top: .5rem;
+
+                .img {
+                    width: 12rem;
+                    height: 17.75rem;
+
+                    img {
+                        border-radius: 1rem;
+                    }
+                }
+                .fav-btn {
+                    width: 1.5rem;
+                    height: 1.875rem;
+                    margin-top: -17rem;
+                    margin-left: 9.5rem;
+
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+
+        .explore-new-daily {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 1.875rem;
+
+            .new-realases, .daily-top {
+                div {
+                    display: flex;
+                    justify-content: space-between;
+
+                    img {
+                        width: 0.6875rem;
+                        height: 1.125rem;
+                    }
+
+                    a {
+                        text-align: center;
+                    }
+                }
+                .list-book-2 {
+    
+                }
+            }
+        }
+        
     }
 }
