@@ -79,51 +79,56 @@
   <!-- Script for Outputting the Book's Information -->
   <script>
     $(document).ready(function() {
+      // Gets the thumbnail and book containers while setting the placeholder image
       var bookThumbnail = document.getElementById('info-thumbnail');
       var bookContainer = document.getElementById("book-container");
       var placeHldr = '<img src="https://via.placeholder.com/150">';
 
-      bookContainer.innerHTML = "";
+      bookContainer.innerHTML = ""; // Sets the value to an empty string
 
+      // Splits the ISBN from the link to store in a variable
       var index = document.URL.indexOf('?isbn=');
       if (index > 0) {
         var bookISBN = document.URL.substring(index, document.URL.length).split("=")[1];
       }
 
+      // Calls an AJAX request to get the exact ISBN
       $.ajax({
         url: "https://www.googleapis.com/books/v1/volumes?q=isbn=" + bookISBN,
         dataType: "json",
         
         success: function (response) {
           if (response.totalItems === 0) {
-            console.log('Not displaying the right ISBN');
+            console.log('Not displaying the right ISBN'); // Error message
           }
           else {
             var id = response.items[0].id;
 
+             // Second AJAX request to get the ID of the book to display the largest image
             $.ajax({
               url: "https://www.googleapis.com/books/v1/volumes/" + id,
               dataType: "json",
               
               success: function (response) {
                 if (response.totalItems === 0) {
-                  console.log('Not displaying the right ID');
+                  console.log('Not displaying the right ID'); // Error message
                 }
                 else {
-                  displayResult(response);
+                  displayResult(response); // Else, runs this function
                 }
               },
               error: function () {
-                console.log('Something went wrong.. <br>" + "Try again!');
+                console.log('Something went wrong.. <br>" + "Try again!'); // Error message
               }
             });
           }
         },
         error: function () {
-          console.log('Something went wrong.. <br>" + "Try again!');
+          console.log('Something went wrong.. <br>" + "Try again!'); // Error message
         }
       });
 
+      // Gets the data and stores it in variables
       function displayResult(response) {
         bookImg = ( response.volumeInfo.imageLinks ) ?  response.volumeInfo.imageLinks.large : placeHldr;
         title = response.volumeInfo.title;
@@ -145,7 +150,7 @@
         // Removes HTML tags
         let strippedString = description.replace(/(<([^>]+)>)/gi, "");
 
-        // in production code, item.text should have the HTML entities escaped.
+        // Passes the values to the formatOutput function
         bookContainer.innerHTML += formatOutput(bookImg, title, author, averageRating, ratingsCount, pageCount, strippedString, author2, author3, publishedDate, publisher);
       }
 
@@ -192,7 +197,7 @@
                             <p>Fiction</p>
                           </div>
                         </div>`;
-        return htmlCard;
+        return htmlCard; // Returns the output
       }
     });
   </script>

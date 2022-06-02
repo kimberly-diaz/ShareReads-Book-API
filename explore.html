@@ -16,6 +16,7 @@
 
 <body>
     <div class="explore-page">
+        <!-- Navigation bar -->
         <div class="nav-bar bg-primary px-5">
             <div class="user mt-5">
                 <div class="img"><img src="assets/images/website/user-2.png" alt="User Icon"></div>
@@ -24,6 +25,7 @@
                     <p class="text-light">Free Account</p>
                 </div>
             </div>
+            <!-- Links to the homepage and main containers -->
             <div class="main-links my-5">
                 <div class="link">
                     <a href="index.html" class="text-light fw-bold">HOMEPAGE</a>
@@ -50,7 +52,10 @@
                 </div>
             </div>
         </div>
+
+        <!-- Right-hand side; main container -->
         <div class="main-container">
+            <!-- Explore header -->
             <div class="mt-5 explore-header">
                 <h1 class="fs-3 fw-bold">EXPLORE</h1>
 
@@ -91,6 +96,7 @@
                 </div>
             </div>
 
+            <!-- New York Times Bestseller Container -->
             <h4 id="nyt" class="text-primary fw-bold fs-5 mt-5 mb-1">Top 15 by New York Times Bestseller</h4>
             <p class="text-dark mb-0">Ever wondered what's the book everyone's reading? We got you!</p>
 
@@ -98,6 +104,7 @@
             <div id="nyt-api" class="cover-only mt-1 p-3">
             </div>
 
+            <!-- New Releases & Daily Top 100 Container -->
             <div class="explore-new-daily mt-5">
                 <div class="new-releases">
                     <h4 id="new" class="text-primary fw-bold fs-5 m-0">New Releases</h4>
@@ -110,10 +117,12 @@
                 </div>
             </div>
 
+            <!-- By Genre & Author Container -->
             <div class="search-section">
                 <h1 id="search-by-1" class="text-primary fw-bold fs-5 mt-3 mb-1">By Genre</h1>
                 <p class="text-dark mb-4">Search by genre! Simply click on a tab you want and start reading!</p>
                 <div class="flex mb-3">
+                    <!-- Buttons pass the appropriate string to the JS function -->
                     <button id="genreDefault" onclick="byGenre('juvenile_fiction')"
                         class="btn search-by-btn btn-secondary-2 text-light">Juvenile Fiction</button>
                     <button onclick="byGenre('fiction')"
@@ -127,12 +136,15 @@
                     <button onclick="byGenre('action')"
                         class="btn search-by-btn btn-lightpurple text-dark ml-2">Action</button>
                 </div>
+
+                <!-- Search by genre results container -->
                 <div id="search-genre" class="cover-only mt-1 mb-5 p-3"></div>
 
                 <h1 id="search-by-2" class="text-primary fw-bold fs-5 mt-3 mb-1">By Author</h1>
                 <p class="text-dark mb-4">Search by our list of chosen authors! Simply click on a tab you want and
                     voila, books-galore!</p>
                 <div class="flex">
+                    <!-- Buttons pass the appropriate string to the JS function -->
                     <button id="authorDefault" onclick="byAuthor('J.R.R')"
                         class="btn search-by-btn btn-secondary-2 text-light">J.R.R. Tolkein</button>
                     <button id="authorDefault" onclick="byAuthor('James+Riley')"
@@ -145,8 +157,10 @@
                         class="btn search-by-btn btn-lightpurple text-dark ml-2">Sophie Cleverly</button>
                 </div>
 
+                <!-- Search by author results container -->
                 <div id="search-author" class="cover-only mt-1 p-3"></div>
 
+                <!-- Footer displaying name & year of creation -->
                 <footer class="mt-5 d-flex justify-content-between">
                     <p class="text-dark">Made by Kimberly Diaz | 396535</p>
                     <p class="mr-5 text-dark">Copyright © ShareReads 2022</p>

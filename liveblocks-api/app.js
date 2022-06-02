@@ -1,9 +1,9 @@
 import { createClient } from "@liveblocks/client";
 
-let PUBLIC_KEY = "pk_live_eU3a0XPigqcID3l5AbrZW3Ak";
-let roomId = "javascript-live-cursors";
+let PUBLIC_KEY = "pk_live_eU3a0XPigqcID3l5AbrZW3Ak"; // My Public API Key
+let roomId = "javascript-live-cursors"; // Creates the Room ID
 
-overrideApiKeyAndRoomId();
+overrideApiKeyAndRoomId(); //Overrides any current ones
 
 if (!/^pk_(live|test)/.test(PUBLIC_KEY)) {
   console.warn(
@@ -12,6 +12,7 @@ if (!/^pk_(live|test)/.test(PUBLIC_KEY)) {
   );
 }
 
+// Creates the client ID
 const client = createClient({
   publicApiKey: PUBLIC_KEY,
 });
@@ -119,8 +120,8 @@ function overrideApiKeyAndRoomId() {
 }
 
 async function run() {
-  let PUBLIC_KEY = "pk_live_eU3a0XPigqcID3l5AbrZW3Ak";
-  let roomId = "javascript-todo-list";
+  let PUBLIC_KEY = "pk_live_eU3a0XPigqcID3l5AbrZW3Ak"; // My Public API Key
+  let roomId = "javascript-todo-list"; // Creates the Room ID
 
   overrideApiKeyAndRoomId();
 
