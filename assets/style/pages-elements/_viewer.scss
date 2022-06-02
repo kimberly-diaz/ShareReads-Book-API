@@ -125,4 +125,23 @@
         width: 100vw;
         height: 100vh;
     }
+
+    .chat-room {
+        .who_is_here {
+            text-align: right;
+        }
+
+        #todos_container {
+            .todo_container {
+                display: flex;
+                justify-content: space-between;
+                margin: .8rem 0;
+
+                button {
+                    border: none;
+                    background-color: transparent;
+                }
+            }
+        }
+    }
 }

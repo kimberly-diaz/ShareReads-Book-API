@@ -1,0 +1,113 @@
+.explore-page {
+    display: grid;
+    grid-template-columns: 25rem 1fr;
+    grid-gap: 3rem;
+
+    .nav-bar {
+        font-family: 'Montserrat', serif;
+        height: 100vh;
+        width: 100%;
+        display: grid;
+        grid-template-rows: 1fr 5fr 1fr;
+        position: sticky;
+        top: 0;
+
+        .user {
+            display: grid;
+            grid-template-columns: 3.4375rem 1fr;
+            grid-gap: 1.5rem;
+
+            .img {
+                width: 3.4375rem;
+                height: 3.4375rem;
+            }
+
+            p {
+                font-size: 1rem;
+                margin-top: -.25rem;
+            }
+        }
+
+        .main-links {
+            display: grid;
+            grid-template-rows: auto;
+
+            .link {
+                display: flex;
+                justify-content: space-between;
+
+                .img {
+                    width: 0.5625rem;
+                    height: 1.0625rem;
+                }
+            }
+        }
+    }
+
+    .main-container {
+        .explore-header, .explore-top10 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .explore-top10 div {
+            display: grid;
+            grid-auto-flow: column;
+            grid-gap: 0.75rem;
+
+            .img {
+                width: 2.125rem;
+                height: 2.125rem;
+            }
+        }
+
+        .cover-only {
+            display: grid;
+            grid-auto-flow: column;
+            grid-gap: 1.875rem;
+            height: 18.5rem;
+            width: 51rem;
+            overflow-y: auto;
+            
+            .img-container {
+                width: 10rem;
+                height: 15.75rem;
+                
+                animation: zoomin 0.5s;
+
+                .img img {
+                    object-fit: cover;
+                    border-radius: 1.5rem;
+                }
+
+                &:hover {
+                    transform: scale(1.1);
+                }
+            }
+        }
+
+        .explore-new-daily {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 1.875rem;
+
+            .new-realases {
+                div {
+                    display: flex;
+                    justify-content: space-between;
+
+                    img {
+                        width: 0.6875rem;
+                        height: 1.125rem;
+                    }
+
+                    a {
+                        text-align: center;
+                    }
+                }
+            }
+        }
+        
+    }
+}

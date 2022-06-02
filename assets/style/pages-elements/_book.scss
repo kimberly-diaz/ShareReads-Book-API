@@ -46,3 +46,7 @@
         }
     }
 }
+
+.search-new, .search-daily {
+    grid-template-columns: 1fr;
+}

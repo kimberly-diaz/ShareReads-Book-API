@@ -7,6 +7,7 @@ $warning: #FF8247;
 $info: #62B6CB;
 $light: #FFFFFF;
 $dark: #1C1C1C;
+$secondary-2: #6B82C0;
 $lightpurple: #F0F5FF;
 $darkerlightpurple: #EBF1FF;
 $grey: #6C757D;
@@ -21,15 +22,74 @@ $theme-colors: (
     "info": $info,
     "light": $light,
     "dark": $dark,
+    "secondary-2": $secondary-2,
     "lightpurple": $lightpurple,
     "darkerlightpurple" :$darkerlightpurple,
     "grey": $grey,
     "lightergrey": $lightergrey
 );
 
+.ml-1 {
+    margin-left: 0.25rem !important;
+}
+
+.ml-2 {
+    margin-left: 0.5rem !important;
+}
+
+.ml-3 {
+    margin-left: 1rem !important;
+}
+
+.ml-4 {
+    margin-left: 1.5rem !important;
+}
+
+.ml-5 {
+    margin-left: 3rem !important;
+}
+
+.mr-1 {
+    margin-right: 0.25rem !important;
+}
+
+.mr-2 {
+    margin-right: 0.5rem !important;
+}
+
+.mr-3 {
+    margin-right: 1rem !important;
+}
+
+.mr-4 {
+    margin-right: 1.5rem !important;
+}
+
+.mr-5 {
+    margin-right: 3rem !important;
+}
+
 // Import bootstrap and Google Fonts
 @import "node_modules/bootstrap/scss/bootstrap";
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;600;700&family=Montserrat:wght@400;700&display=swap');
+
+.fw-600 {
+    font-weight: 600;
+}
+
+::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+    background: transparent;
+}
+  
+::-webkit-scrollbar-thumb {
+    background: $lightpurple;
+}
+  
+::-webkit-scrollbar-thumb:hover {
+    background: $secondary-2;
+}
 
 * {
     padding: 0;
@@ -76,129 +136,70 @@ button {
     border-color: transparent;
 }
 
+.search-by-btn {
+    border-radius: 3rem;
+    &:hover {
+        background-color: $primary;
+    }
+}
+
+.outer-search-container {
+    display: grid;
+    grid-template-columns: 22.5rem 1fr;
+    grid-gap: 1.5rem;
+
+    .inner-search-container {
+        display: grid;
+        grid-template-columns: 15rem 7.5rem;
+
+        input {
+            border-radius: 0.625rem 0 0 0.625rem;
+            padding: 1rem;
+        }
+
+        .search-btn {
+            border-radius: 0 0.625rem 0.625rem 0;
+        }
+    }
+
+    .home-btn {
+        border-radius: 0.625rem;
+        width: 4rem;
+        height: 4rem;
+
+        .img {
+            width: 2rem;
+            height: 2rem;
+            margin: 0 auto;
+        }
+    }
+}
+
 // Import Partial Files
 @import "pages-elements/index";
 @import "pages-elements/book";
 @import "pages-elements/viewer";
+@import "pages-elements/explore";
 
-.explore-page {
-    display: grid;
-    grid-template-columns: 25rem 1fr;
-    grid-gap: 3rem;
-
-    .nav-bar {
-        border-radius: 0 1.2rem 1.2rem 0;
-        font-family: 'Montserrat', serif;
-        height: 100vh;
-        display: grid;
-        grid-template-rows: 1fr 5fr 1fr;
-        position: sticky;
-        top: 0;
-
-        .user {
-            display: grid;
-            grid-template-columns: 3.4375rem 1fr;
-            grid-gap: 1.5rem;
-
-            .img {
-                width: 3.4375rem;
-                height: 3.4375rem;
-            }
-
-            p {
-                font-size: 1rem;
-                margin-top: -.25rem;
-            }
-        }
-
-        .main-links {
-            display: grid;
-            grid-template-rows: auto;
-
-            .link {
-                display: flex;
-                justify-content: space-between;
-
-                .img {
-                    width: 0.5625rem;
-                    height: 1.0625rem;
-                }
-            }
-        }
+// Animations
+@keyframes fadein {
+    from {
+      opacity: 0;
     }
-
-    .main-container {
-        .explore-header, .explore-top10 {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .explore-top10 div {
-            display: grid;
-            grid-auto-flow: column;
-            grid-gap: 0.75rem;
-
-            .img {
-                width: 2.125rem;
-                height: 2.125rem;
-            }
-        }
-
-        .nyt-api {
-            display: grid;
-            grid-auto-flow: column;
-            grid-gap: 1.875rem;
-            height: 17.75rem;
-            
-            .img-container {
-                margin-top: .5rem;
-
-                .img {
-                    width: 12rem;
-                    height: 17.75rem;
-
-                    img {
-                        border-radius: 1rem;
-                    }
-                }
-                .fav-btn {
-                    width: 1.5rem;
-                    height: 1.875rem;
-                    margin-top: -17rem;
-                    margin-left: 9.5rem;
-
-                    &:hover {
-                        cursor: pointer;
-                    }
-                }
-            }
-        }
-
-        .explore-new-daily {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-gap: 1.875rem;
-
-            .new-realases, .daily-top {
-                div {
-                    display: flex;
-                    justify-content: space-between;
-
-                    img {
-                        width: 0.6875rem;
-                        height: 1.125rem;
-                    }
-
-                    a {
-                        text-align: center;
-                    }
-                }
-                .list-book-2 {
-    
-                }
-            }
-        }
-        
+  
+    to {
+      opacity: 1;
     }
-}
+  }
+  
+  @keyframes zoomin {
+    from {
+      opacity: 0;
+      transform: translate(0, -64px) scale(0);
+    }
+  
+    to {
+      opacity: 1;
+      transform: translate(0, -64px) scale(1);
+    }
+  }

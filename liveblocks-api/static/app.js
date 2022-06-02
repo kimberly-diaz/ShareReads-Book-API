@@ -179,7 +179,7 @@
     }
     throw new Error(`Impossible to compare similar position "${posA}" and "${posB}"`);
   }
-  var LiveList = class extends AbstractCrdt {
+  var LiveList2 = class extends AbstractCrdt {
     constructor(items = []) {
       let position;
       super(), this._items = [];
@@ -189,7 +189,7 @@
       }
     }
     static _deserialize([id], parentToChildren, doc) {
-      const list = new LiveList([]);
+      const list = new LiveList2([]);
       list._attach(id, doc);
       const children = parentToChildren.get(id);
       if (children == null)
@@ -773,7 +773,7 @@
       case OpCode.CREATE_MAP:
         return new LiveMap();
       case OpCode.CREATE_LIST:
-        return new LiveList();
+        return new LiveList2();
     }
   }
   function isSameNodeOrChildOf(node, parent) {
@@ -784,7 +784,7 @@
       case CrdtType.OBJECT:
         return LiveObject._deserialize(entry, parentToChildren, doc);
       case CrdtType.LIST:
-        return LiveList._deserialize(entry, parentToChildren, doc);
+        return LiveList2._deserialize(entry, parentToChildren, doc);
       case CrdtType.MAP:
         return LiveMap._deserialize(entry, parentToChildren, doc);
       case CrdtType.REGISTER:
@@ -794,13 +794,13 @@
     }
   }
   function isCrdt(obj) {
-    return obj instanceof LiveObject || obj instanceof LiveMap || obj instanceof LiveList || obj instanceof LiveRegister;
+    return obj instanceof LiveObject || obj instanceof LiveMap || obj instanceof LiveList2 || obj instanceof LiveRegister;
   }
   function selfOrRegisterValue(obj) {
     return obj instanceof LiveRegister ? obj.data : obj;
   }
   function selfOrRegister(obj) {
-    if (obj instanceof LiveObject || obj instanceof LiveMap || obj instanceof LiveList)
+    if (obj instanceof LiveObject || obj instanceof LiveMap || obj instanceof LiveList2)
       return obj;
     if (obj instanceof LiveRegister)
       throw new Error("Internal error. LiveRegister should not be created from selfOrRegister");
@@ -1400,7 +1400,7 @@
             return {
               modified: false
             };
-          if (item._parent instanceof LiveList) {
+          if (item._parent instanceof LiveList2) {
             const previousKey = item._parentKey;
             return previousKey === op.parentKey ? {
               modified: false
@@ -2112,4 +2112,79 @@ Learn more: https://github.com/liveblocks/liveblocks/tree/main/examples/javascri
       roomId = `${roomId}-${roomIdSuffix}`;
     }
   }
+  async function run() {
+    let PUBLIC_KEY2 = "pk_live_eU3a0XPigqcID3l5AbrZW3Ak";
+    let roomId2 = "javascript-todo-list";
+    overrideApiKeyAndRoomId2();
+    if (!/^pk_(live|test)/.test(PUBLIC_KEY2)) {
+      console.warn(`Replace "${PUBLIC_KEY2}" by your public key from https://liveblocks.io/dashboard/apikeys.
+Learn more: https://github.com/liveblocks/liveblocks/tree/main/examples/javascript-todo-list#getting-started.`);
+    }
+    const client2 = createClient({
+      publicApiKey: PUBLIC_KEY2
+    });
+    const room2 = client2.enter(roomId2);
+    const whoIsHere = document.getElementById("who_is_here");
+    const todoInput = document.getElementById("todo_input");
+    const someoneIsTyping = document.getElementById("someone_is_typing");
+    const todosContainer = document.getElementById("todos_container");
+    room2.subscribe("others", (others) => {
+      whoIsHere.innerHTML = `There are ${others.count} other users online`;
+      someoneIsTyping.innerHTML = others.toArray().some((user) => user.presence?.isTyping) ? "Someone is typing..." : "";
+    });
+    const { root } = await room2.getStorage();
+    let todos = root.get("todos");
+    if (todos == null) {
+      todos = new LiveList();
+      root.set("todos", todos);
+    }
+    todoInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        room2.updatePresence({ isTyping: false });
+        todos.push({ text: todoInput.value });
+        todoInput.value = "";
+      } else {
+        room2.updatePresence({ isTyping: true });
+      }
+    });
+    todoInput.addEventListener("blur", () => {
+      room2.updatePresence({ isTyping: false });
+    });
+    function render() {
+      todosContainer.innerHTML = "";
+      for (let i = 0; i < todos.length; i++) {
+        const todo = todos.get(i);
+        const todoContainer = document.createElement("div");
+        todoContainer.classList.add("todo_container");
+        const todoText = document.createElement("div");
+        todoText.classList.add("todo");
+        todoText.innerHTML = todo.text;
+        todoContainer.appendChild(todoText);
+        const deleteButton = document.createElement("button");
+        deleteButton.classList.add("delete_button");
+        deleteButton.innerHTML = "\u2715";
+        deleteButton.addEventListener("click", () => {
+          todos.delete(i);
+        });
+        todoContainer.appendChild(deleteButton);
+        todosContainer.appendChild(todoContainer);
+      }
+    }
+    room2.subscribe(todos, () => {
+      render();
+    });
+    function overrideApiKeyAndRoomId2() {
+      const query = new URLSearchParams(window?.location?.search);
+      const apiKey = query.get("apiKey");
+      const roomIdSuffix = query.get("roomId");
+      if (apiKey) {
+        PUBLIC_KEY2 = apiKey;
+      }
+      if (roomIdSuffix) {
+        roomId2 = `${roomId2}-${roomIdSuffix}`;
+      }
+    }
+    render();
+  }
+  run();
 })();

@@ -40,26 +40,30 @@
     <!-- Navigation bar -->
     <div class="nav-bar bg-primary">
       <div>
-        <div class="img img-user mb-5"><a href="../..//login.html"><img src="../../assets/images/website/user.png" alt="User Icon"></a></div>
         <div class="img"><a href="../../index.html"><img src="../../assets/images/website/home.png" alt="Home Icon"></a></div>
         <div class="img"><a href="../..//explore.html"><img src="../../assets/images/website/explore.png" alt="Explore Icon"></a></div>
-        <div class="img"><a href="../..//favourite.html"><img src="../../assets/images/website/favourite.png" alt="Favourite Icon"></a></div>
       </div>
-      <div class="img img-leave"><a href="../..//logout.html"><img src="../../assets/images/website/leave.png" alt="Leave Icon"></a></div>
     </div>
 
     <!-- Book Information Section -->
     <div class="book-fullinfo px-4 py-5">
       <div class="info-header">
         <h1 class="fw-bold text-dark fs-3">READING</h1>
-        <button class="btn btn-outline-secondary">Change ISBN Link</button>
       </div>
 
       <!-- Outputs the Book Container from a Javascript File -->
       <div id="book-container"></div>
 
-      <!-- Missing -->
-      <div class="chat-room">missing</div>
+      <div class="chat-room d-flex justify-content-center align-content-center mt-4 bg-darkerlightpurple rounded pb-5 rounded">
+        <div class="w-75">
+          <h4 class="mt-4 text-center fw-bold fs-5 mb-3">CHAT ROOM</h4>
+          <div id="who_is_here" class="who_is_here text-secondary"></div>
+          <input id="todo_input" type="text" placeholder="What do you want to say?" class="w-100 px-3 py-2 border-0" />
+          <div id="someone_is_typing" class="someone_is_typing"></div>
+  
+          <div id="todos_container"></div>
+        </div>
+      </div>
     </div>
 
     <!-- Contains the Cursor Container & the Google ViewFinder -->
@@ -67,7 +71,6 @@
       <div id="cursors-container"></div>
       <div id="viewerCanvas" style="width: 100%; height: 100vh"></div>
     </div>
-
   </div>
 
   <!-- Script for the Liveblocks live cursors -->
@@ -93,7 +96,7 @@
         
         success: function (response) {
           if (response.totalItems === 0) {
-            alert("No result... Try again...")
+            console.log('Not displaying the right ISBN');
           }
           else {
             var id = response.items[0].id;
@@ -104,20 +107,20 @@
               
               success: function (response) {
                 if (response.totalItems === 0) {
-                  alert("No result... Try again...")
+                  console.log('Not displaying the right ID');
                 }
                 else {
                   displayResult(response);
                 }
               },
               error: function () {
-                alert("Something went wrong.. <br>" + "Try again!");
+                console.log('Something went wrong.. <br>" + "Try again!');
               }
             });
           }
         },
         error: function () {
-          alert("Something went wrong.. <br>" + "Try again!");
+          console.log('Something went wrong.. <br>" + "Try again!');
         }
       });
 
@@ -127,8 +130,8 @@
         author = response.volumeInfo.authors[0];
         author2 = ( response.volumeInfo.authors[1] ) ?  response.volumeInfo.authors[1] : "";
         author3 = ( response.volumeInfo.authors[2] ) ?  response.volumeInfo.authors[2] : "";
-        averageRating = response.volumeInfo.averageRating;
-        ratingsCount = response.volumeInfo.ratingsCount;
+        averageRating = ( response.volumeInfo.averageRating ) ?  response.volumeInfo.averageRating : "?";
+        ratingsCount = ( response.volumeInfo.ratingsCount ) ?  response.volumeInfo.ratingsCount : "?";
         pageCount = response.volumeInfo.pageCount;
         publishedDate = response.volumeInfo.publishedDate;
         publisher = response.volumeInfo.publisher;
@@ -155,12 +158,12 @@
                             <p class="info-author text-grey">by ${author}</p>
                             <div class="info-stats bg-lightpurple">
                               <div class="info-stars text-secondary">
-                                <div class="info-stars">${averageRating}/5 Stars</div>
+                                <div class="info-stars"><span class="fw-600">${averageRating}</span>/5 Stars</div>
                               </div>
                               <p class="text-secondary fw-bold">|</p>
-                              <div class="info-ratings text-secondary">${ratingsCount} Ratings</div>
+                              <div class="info-ratings text-secondary"><span class="fw-600">${ratingsCount}</span> Ratings</div>
                               <p class="text-secondary fw-bold">|</p>
-                              <div class="info-pages text-secondary">${pageCount} Pages</div>
+                              <div class="info-pages text-secondary"><span class="fw-600">${pageCount}</span> Pages</div>
                             </div>
                             <p class="fw-bold fs-5 mt-2 mb-0">Sypnosis</p>
                             <div class="info-desc">${description}</div>
