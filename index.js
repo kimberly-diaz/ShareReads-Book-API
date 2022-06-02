@@ -59,12 +59,16 @@ const drawListBook = async () => {
           ({ volumeInfo }) =>
             `<div class='book'>
               <div class="book-img">
-                <a href='${volumeInfo.previewLink}' target='_blank'><img class='thumbnail' src='` +
+                <a href='liveblocks-api/static/index.html?isbn=` +
+                volumeInfo.industryIdentifiers[0].identifier +
+                `' target='_blank'><img class='thumbnail' src='` +
             extractThumbnail(volumeInfo) +
             `' alt='cover'></a>
               </div>
               <div class='book-info'>
-                <h3 class='book-title fw-bold m-0'><a class="text-dark" href='${volumeInfo.previewLink}' target='_blank'>${volumeInfo.title}</a></h3>
+                <h3 class='book-title fw-bold m-0'><a class="text-dark" href='liveblocks-api/static/index.html?isbn=` +
+                volumeInfo.industryIdentifiers[0].identifier +
+                `' target='_blank'>${volumeInfo.title}</a></h3>
 
                 <div class='book-authors'>by ${volumeInfo.authors[0]}` +
             (volumeInfo.authors[1] === undefined
@@ -87,9 +91,6 @@ const drawListBook = async () => {
               ? "Unknown"
               : volumeInfo.categories) +
             `</p>
-                <a target='_blank' href='liveblocks-api/static/index.html?isbn=` +
-            volumeInfo.industryIdentifiers[0].identifier +
-            `' class='btn text-primary bg-outline-primary search-box-2'>not sure</a>
               </div>
             </div>`
         )
